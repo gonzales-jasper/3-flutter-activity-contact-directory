@@ -1,53 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:student_contact_directory/shared/styled_text.dart';
+import 'package:student_contact_directory/shared/textfield_card.dart';
 import 'package:student_contact_directory/theme.dart';
 
 import '../shared/card.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AddContact extends StatefulWidget {
+  const AddContact({super.key, required this.onAdd});
+
+  final Function(Map<String,String>) onAdd;
+
+  @override
+  State<AddContact> createState() => _AddContactState();
+}
+
+class _AddContactState extends State<AddContact> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final contactController = TextEditingController();
+  final programController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StyledTitleLarge("Welcome!"),
-          StyledTitle("Jasper N. Gonzales"),
-          Text(
-            "BSIT 3GG1",
-            style: TextStyle(
-              color: AppColors.textColor,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
-          ),
-          const SizedBox(height: 20),
-          StyledText(
-            "Hi! Outside of coding, I'm a space enthusiast, as i'm a huge fan of Interstellar and black hole fun facts. Also, I'm Taylor Swift fan. I currently love building with Flutter because its default design and intuitive frameworks make development a breeze!",
-          ),
-          const SizedBox(height: 20),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFieldCard(
+              tfController: nameController,
+              keyboardTypes: TextInputType.text,
+                labelTexts: 'Full Name',
+                prefixIcon:  Icons.person,
+            ),
+            const SizedBox(height: 18),
 
-          //container
-          StyledCard(
-            icon: Icons.edit_note,
-            iconColor: AppColors.primaryColor,
-            title: 'My Goal',
-            subtitle:
-                'To become a software developer and build solutions that make a difference.',
-          ),
-          SizedBox(height: 10),
-
-          //second container
-          StyledCard(
-            icon: Icons.star,
-            iconColor: AppColors.secondaryColor,
-            title: 'Favorite Movie Line',
-            subtitle: "It's Impossible--No, it's Necessary.",
-          ),
-        ],
+            TextFieldCard(
+              tfController: emailController,
+              keyboardTypes: TextInputType.emailAddress,
+              labelTexts: 'Email Address',
+              prefixIcon:  Icons.email,
+            ),
+            const SizedBox(height: 18),
+            TextField(
+              controller: contactController,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: 'Contact Number',
+                prefixIcon: Icon(Icons.phone),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 18),
+            TextField(
+              controller: programController,
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                labelText: 'Program',
+                prefixIcon: Icon(Icons.school),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  side: const BorderSide(
+                    color: AppColors.scaffoldBackground,  // the border's color
+                    width: 1,                   // how thick the border line is
+                  ),
+                ),
+              ),
+              onPressed:(){}/* _submitContact*/,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12),
+                child: Text('Add Contact'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../shared/avatar_circle.dart';
-import '../shared/profile_card/info_card.dart';
-import '../shared/profile_card/info_row.dart';
+import '../shared/information_Card/info_card.dart';
+import '../shared/information_Card/info_row.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ContactList extends StatelessWidget {
+  const ContactList({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,8 +3,8 @@ import 'package:student_contact_directory/theme.dart';
 
 import 'card_with_images.dart';
 
-class ActivitiesPage extends StatelessWidget {
-  const ActivitiesPage({super.key});
+class Information extends StatelessWidget {
+  const Information({super.key});
 
   @override
   Widget build(BuildContext context) {
