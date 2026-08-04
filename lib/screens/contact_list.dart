@@ -1,88 +1,51 @@
 import 'package:flutter/material.dart';
-import '../shared/avatar_circle.dart';
-import '../shared/information_Card/info_card.dart';
-import '../shared/information_Card/info_row.dart';
+import 'package:student_contact_directory/theme.dart';
 
 class ContactList extends StatelessWidget {
-  const ContactList({super.key});
+  const ContactList({
+    super.key,
+    required this.contacts,
+    required this.onDelete,
+  });
+
+  final Function(int) onDelete;
+  final List<Map<String, String>> contacts;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    if (contacts.isEmpty) {
+      return const Center(child: Text('No contacts have been added.'));
+    }
+
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          const SizedBox(height: 8),
-          Center(child: AvatarCircle()),
-          const SizedBox(height: 20),
-
-          InfoCard(
-            title: 'Personal Information',
-            titleIcon: Icons.person,
-            rows: const [
-              InfoRow(
-                icon: Icons.badge,
-                label: 'Full Name',
-                value: 'Jasper N. Gonzales',
-              ),
-              InfoRow(
-                icon: Icons.confirmation_number,
-                label: 'Student Number',
-                value: '2024100973',
-              ),
-              InfoRow(
-                icon: Icons.school,
-                label: 'Course',
-                value: 'Bachelor of Science in Information Technology',
-              ),
-              InfoRow(
-                icon: Icons.people,
-                label: 'Year Level',
-                value: '3nd Year',
-              ),
-            ],
+      itemCount: contacts.length,
+      itemBuilder: (context, index) {
+        final contact = contacts[index];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
           ),
-
-          InfoCard(
-            title: 'Contact Information',
-            titleIcon: Icons.email,
-            rows: const [
-              InfoRow(
-                icon: Icons.email,
-                label: 'Email',
-                value: 'pro.japegonzales@gmail.com',
-              ),
-              InfoRow(icon: Icons.phone, label: 'Phone', value: '09553864609'),
-              InfoRow(
-                icon: Icons.location_on,
-                label: 'Address',
-                value: 'Paombong, Bulacan',
-              ),
-            ],
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: AppColors.primaryColor,
+              child: const Icon(Icons.person, color: Colors.white),
+            ),
+            title: Text(contact['name'] ?? ''),
+            subtitle: Text(
+              '${contact['email']}\n${contact['contact']} • ${contact['program']}',
+            ),
+            isThreeLine: true,
+            trailing: IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: () => onDelete(index),
+            ),
           ),
-          InfoCard(
-            title: 'Skills And Interest',
-            titleIcon: Icons.interests,
-            rows: const [
-              InfoRow(
-                icon: Icons.code,
-                label: 'Technical Skills',
-                value: 'Flutter & Dart, UI/UX Design',
-              ),
-              InfoRow(
-                icon: Icons.favorite_border,
-                label: 'Interests',
-                value: 'Space & Astronomy, Software Development, Music',
-              ),
-              InfoRow(
-                icon: Icons.emoji_events_outlined,
-                label: 'Aspiration',
-                value: 'To become a skilled software developer',
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
