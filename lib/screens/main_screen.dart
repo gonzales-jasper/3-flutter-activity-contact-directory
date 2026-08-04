@@ -20,6 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   void addContact(Map<String, String> contact) {
     setState(() {
       contacts.add(contact);
+      selectedIndex = 1;
     });
   }
 
@@ -49,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const StyledTitle("Student Profile App"),
+        title: const StyledTitle("Student Contact Directory"),
         centerTitle: true,
       ),
       drawer: _buildDrawer(),

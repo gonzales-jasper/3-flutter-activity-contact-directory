@@ -18,6 +18,15 @@ class _AddContactState extends State<AddContact> {
   final programController = TextEditingController();
 
   @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    contactController.dispose();
+    programController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

@@ -57,7 +57,7 @@ class Information extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'BSIT - Student Developer',
+                  'BSIT - 3GG1',
                   style: TextStyle(color: AppColors.textColor),
                 ),
                 Divider(height: 32, color: AppColors.cardAccent),

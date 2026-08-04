@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:student_contact_directory/theme.dart';
 
+import '../shared/styled_text.dart';
+
 class ContactList extends StatelessWidget {
   const ContactList({
     super.key,
@@ -36,7 +38,30 @@ class ContactList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (contacts.isEmpty) {
-      return const Center(child: Text('No contacts have been added.'));
+      return Padding(
+        padding: EdgeInsets.all(45),
+        child: const Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.contact_page_outlined,
+                size: 300,
+                color: Colors.white70,
+              ),
+              SizedBox(height: 20),
+              StyledHeading('No contacts have been added.'),
+              SizedBox(height: 5),
+              Text(
+                "Add a student contact using the Add Contact Page",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white70),
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     return ListView.builder(
@@ -91,7 +116,6 @@ class ContactList extends StatelessWidget {
 
   void _showDeleteContactDialog(BuildContext context, int index) {
     final String contactName = contacts[index]['name'] ?? '';
-    final String contactNumber = contacts[index]['contact'] ?? '';
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
