@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import '../theme.dart';
 
 class TextFieldCard extends StatelessWidget {
@@ -21,6 +21,13 @@ class TextFieldCard extends StatelessWidget {
     return TextField(
       controller: tfController,
       keyboardType: keyboardTypes,
+
+      inputFormatters: [
+        if (keyboardTypes == TextInputType.phone) ...[
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(11),
+        ],
+      ],
       decoration: InputDecoration(
         labelText: labelTexts,
         prefixIcon: Icon(prefixIcon),

@@ -92,7 +92,7 @@ class _AddContactState extends State<AddContact> {
     final name = nameController.text.trim();
     final email = emailController.text.trim();
     final contact = contactController.text.trim();
-    final program = programController.text.trim();
+    final program = programController.text.trim().toUpperCase();
 
     if (name.isEmpty || email.isEmpty || contact.isEmpty || program.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +101,10 @@ class _AddContactState extends State<AddContact> {
       return;
     }
 
-    if (!email.contains('@')) {
+    if (!email.contains('@') ||
+        !email.contains('.') ||
+        email.startsWith('@') ||
+        email.endsWith('.')) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a valid email address.')),
       );

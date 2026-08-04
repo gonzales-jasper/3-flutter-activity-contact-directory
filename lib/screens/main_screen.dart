@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
         title: const StyledTitle("Student Profile App"),
         centerTitle: true,
       ),
-      drawer: _buildDrawer(context),
+      drawer: _buildDrawer(),
       body: _pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         //highlight which page is selected
@@ -74,21 +74,45 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildDrawer(BuildContext context) {
+  Widget _buildDrawer() {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const UserAccountsDrawerHeader(
-            accountName: Text('Develop By: Jasper N. Gonzales'),
-            accountEmail: Text('pro.japegonzales@gmail.com'),
-            currentAccountPicture: CircleAvatar(
+          // Single unified header
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(color: AppColors.primaryColor),
+            accountName: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text(
+                  'Student Contact Directory',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  'Developed by: Jasper N. Gonzales',
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
+                SizedBox(height: 5),
+              ],
+            ),
+            currentAccountPicture: const CircleAvatar(
               backgroundImage: AssetImage('assets/id.png'),
             ),
+            accountEmail: null,
           ),
+
+          // Navigation Items
           ListTile(
             leading: const Icon(Icons.person_add),
             title: const Text('Add Contact'),
+            selected: selectedIndex == 0,
             onTap: () {
               Navigator.pop(context);
               setState(() => selectedIndex = 0);
@@ -97,25 +121,28 @@ class _MainScreenState extends State<MainScreen> {
           ListTile(
             leading: const Icon(Icons.contacts),
             title: const Text('View Contacts'),
+            selected: selectedIndex == 1,
             onTap: () {
               Navigator.pop(context);
               setState(() => selectedIndex = 1);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.delete_forever),
+            leading: const Icon(Icons.info_outline),
+            title: const Text('About'),
+            selected: selectedIndex == 2,
+            onTap: () {
+              Navigator.pop(context);
+              setState(() => selectedIndex = 2);
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
             title: const Text('Clear All Contacts'),
             onTap: () {
               Navigator.pop(context);
-              _showClearAllDialog(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: const Text('About'),
-            onTap: () {
-              Navigator.pop(context);
-              setState(() => selectedIndex = 2); // jump to Information tab
+              _showClearAllDialog();
             },
           ),
           ListTile(
@@ -123,7 +150,7 @@ class _MainScreenState extends State<MainScreen> {
             title: const Text('Logout'),
             onTap: () {
               Navigator.pop(context);
-              _showLogoutDialog(context);
+              _showLogoutDialog();
             },
           ),
         ],
@@ -131,7 +158,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _showClearAllDialog(BuildContext context) {
+  void _showClearAllDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -161,7 +188,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _showLogoutDialog(BuildContext context) {
+  void _showLogoutDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
