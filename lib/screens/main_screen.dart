@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:student_contact_directory/screens/information.dart';
 import 'package:student_contact_directory/screens/contact_list.dart';
 import 'package:student_contact_directory/screens/add_contact.dart';
+import 'package:student_contact_directory/screens/old_files/about_me.dart';
 import '../shared/styled_text.dart';
 import '../theme.dart';
 
@@ -146,6 +147,18 @@ class _MainScreenState extends State<MainScreen> {
               _showClearAllDialog();
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
+            title: const Text('Clear All Contacts'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutMe()),
+              );
+            },
+          ),
+          const Divider(),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),

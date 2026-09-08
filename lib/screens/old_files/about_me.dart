@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_contact_directory/shared/styled_text.dart';
 
-import '../theme.dart';
+import '../../theme.dart';
 
 class AboutMe extends StatelessWidget {
   const AboutMe({super.key});

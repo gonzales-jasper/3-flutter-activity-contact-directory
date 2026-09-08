@@ -9,8 +9,10 @@ class TextFieldCard extends StatelessWidget {
     required this.labelTexts,
     required this.prefixIcon,
     required this.keyboardTypes,
+    this.errortxt,
   });
 
+  final String? errortxt;
   final TextEditingController tfController;
   final TextInputType keyboardTypes;
   final String labelTexts;
@@ -21,7 +23,6 @@ class TextFieldCard extends StatelessWidget {
     return TextField(
       controller: tfController,
       keyboardType: keyboardTypes,
-
       inputFormatters: [
         if (keyboardTypes == TextInputType.phone) ...[
           FilteringTextInputFormatter.digitsOnly,
@@ -31,6 +32,7 @@ class TextFieldCard extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelTexts,
         prefixIcon: Icon(prefixIcon),
+        errorText: errortxt,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColors.textColor.withOpacity(0.3)),

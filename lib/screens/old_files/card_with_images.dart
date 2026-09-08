@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../shared/styled_text.dart';
-import '../theme.dart';
+import '../../shared/styled_text.dart';
+import '../../theme.dart';
 
 class CardWithImages extends StatelessWidget {
   final String description;

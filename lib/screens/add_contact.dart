@@ -17,6 +17,40 @@ class _AddContactState extends State<AddContact> {
   final contactController = TextEditingController();
   final programController = TextEditingController();
 
+  String? nameError;
+  String? emailError;
+  String? contactError;
+  String? programError;
+
+  @override
+  void initState() {
+    super.initState();
+
+    nameController.addListener(() {
+      if (nameError != null) {
+        setState(() => nameError = null);
+      }
+    });
+
+    emailController.addListener(() {
+      if (emailError != null) {
+        setState(() => emailError = null);
+      }
+    });
+
+    contactController.addListener(() {
+      if (contactError != null) {
+        setState(() => contactError = null);
+      }
+    });
+
+    programController.addListener(() {
+      if (programError != null) {
+        setState(() => programError = null);
+      }
+    });
+  }
+
   @override
   void dispose() {
     nameController.dispose();
@@ -52,6 +86,7 @@ class _AddContactState extends State<AddContact> {
               keyboardTypes: TextInputType.text,
               labelTexts: 'Full Name',
               prefixIcon: Icons.person,
+              errortxt: nameError,
             ),
             const SizedBox(height: 18),
 
@@ -60,6 +95,7 @@ class _AddContactState extends State<AddContact> {
               keyboardTypes: TextInputType.emailAddress,
               labelTexts: 'Email Address',
               prefixIcon: Icons.email,
+              errortxt: emailError,
             ),
             const SizedBox(height: 18),
             TextFieldCard(
@@ -67,6 +103,7 @@ class _AddContactState extends State<AddContact> {
               keyboardTypes: TextInputType.phone,
               labelTexts: 'Contact Number',
               prefixIcon: Icons.phone,
+              errortxt: contactError,
             ),
             const SizedBox(height: 18),
             TextFieldCard(
@@ -74,6 +111,7 @@ class _AddContactState extends State<AddContact> {
               keyboardTypes: TextInputType.text,
               labelTexts: 'Program',
               prefixIcon: Icons.school,
+              errortxt: programError,
             ),
             const SizedBox(height: 24),
             ElevatedButton(
@@ -103,6 +141,33 @@ class _AddContactState extends State<AddContact> {
     final contact = contactController.text.trim();
     final program = programController.text.trim().toUpperCase();
 
+    final newNameError = name.isEmpty ? 'Name is required' : null;
+
+    final newEmailError = email.isEmpty
+        ? 'Email is required'
+        : (!email.contains('@') ||
+              !email.contains('.') ||
+              email.startsWith('@') ||
+              email.endsWith('.') ||
+              email.endsWith('@'))
+        ? 'Enter a valid email address'
+        : null;
+
+    final newContactError = contact.isEmpty
+        ? 'Contact number is required'
+        : (!RegExp(r'^[0-9]+$').hasMatch(contact) || contact.length != 11)
+        ? 'Enter a valid 11-digit number'
+        : null;
+
+    final newProgramError = program.isEmpty ? 'Program is required' : null;
+
+    setState(() {
+      nameError = newNameError;
+      emailError = newEmailError;
+      contactError = newContactError;
+      programError = newProgramError;
+    });
+
     if (name.isEmpty || email.isEmpty || contact.isEmpty || program.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all fields.')),
@@ -113,7 +178,8 @@ class _AddContactState extends State<AddContact> {
     if (!email.contains('@') ||
         !email.contains('.') ||
         email.startsWith('@') ||
-        email.endsWith('.')) {
+        email.endsWith('.') ||
+        email.endsWith('@')) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a valid email address.')),
       );
