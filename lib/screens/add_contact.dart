@@ -51,6 +51,7 @@ class _AddContactState extends State<AddContact> {
     });
   }
 
+//disposing
   @override
   void dispose() {
     nameController.dispose();
@@ -68,7 +69,10 @@ class _AddContactState extends State<AddContact> {
         margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme
+              .of(context)
+              .colorScheme
+              .surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -146,10 +150,10 @@ class _AddContactState extends State<AddContact> {
     final newEmailError = email.isEmpty
         ? 'Email is required'
         : (!email.contains('@') ||
-              !email.contains('.') ||
-              email.startsWith('@') ||
-              email.endsWith('.') ||
-              email.endsWith('@'))
+        !email.contains('.') ||
+        email.startsWith('@') ||
+        email.endsWith('.') ||
+        email.endsWith('@'))
         ? 'Enter a valid email address'
         : null;
 
